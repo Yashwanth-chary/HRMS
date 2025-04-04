@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="../assets/styles/User.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+      <div class="container-fluid">
+        <img
+          src="../assets/images/logo.png"
+          alt="Company Logo"
+          class="mb-1"
+          style="width: 150px"
+        />
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link active rounded px-3"
+                href="#home"
+                data-section="home"
+              >
+                <i class="bi bi-house-door me-1"></i>Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link rounded px-3"
+                href="#salary-details"
+                data-section="salary-details"
+              >
+                <i class="bi bi-cash-coin me-1"></i> Salary
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link rounded px-3"
+                href="#leaves"
+                data-section="leaves"
+              >
+                <i class="bi bi-calendar3 me-1"></i> Leaves
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                id="logout"
+                class="nav-link text-danger"
+                role="button"
+                style="cursor: pointer"
+              >
+                <i class="bi bi-box-arrow-right me-1"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container px-5">
+      <div id="home" class="section active">
+        <div class="dashboard-container">
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+              <h5><i class="bi bi-person-badge me-2"></i>My Profile</h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <p><strong>Name:</strong> <span id="employeeName"></span></p>
+                  <p>
+                    <strong>Designation:</strong>
+                    <span id="employeeDesignation"></span>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <p>
+                    <strong>Department:</strong>
+                    <span id="employeeDepartment"></span>
+                  </p>
+                  <p>
+                    <strong>Date of Joining:</strong>
+                    <span id="employeeDOJ"></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="card h-100 shadow-sm">
+                <div class="card-header bg-info text-white">
+                  <h5><i class="bi bi-calendar-check me-2"></i>Leaves</h5>
+                </div>
+                <div class="card-body">
+                  <p>
+                    <strong>Taken:</strong> <span id="leavesTaken">0</span> days
+                  </p>
+                  <p>
+                    <strong>Pending:</strong>
+                    <span id="leavesPending">0</span> days
+                  </p>
+                  <a href="#leaves" class="btn btn-sm btn-outline-primary mt-2"
+                    >Apply for Leave</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+              <div class="card h-100 shadow-sm">
+                <div class="card-header bg-success text-white">
+                  <h5><i class="bi bi-cash-stack me-2"></i>Salary</h5>
+                </div>
+                <div class="card-body">
+                  <p>
+                    <strong>Last Paid:</strong>
+                    <span id="lastSalary">Loading...</span>
+                  </p>
+                  <a
+                    href="#salary-details"
+                    class="btn btn-sm btn-outline-success mt-2"
+                    >View Payslips</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+              <div class="card h-100 shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                  <h5><i class="bi bi-lightning me-2"></i>Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                  <div class="d-grid gap-2">
+                    <a
+                      href="#salary-details"
+                      class="btn btn-outline-warning btn-sm"
+                      >View Salary Details</a
+                    >
+                    <a href="#leaves" class="btn btn-outline-warning btn-sm"
+                      >Apply for Leave</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="salary-details" class="section p-4">
+        <div class="container-fluid">
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+              <h2 class="h5 mb-0">
+                <i class="bi bi-cash-stack me-2"></i>Salary History
+              </h2>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover" id="salaryHistoryTable">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Month</th>
+                      <th>Year</th>
+                      <th>Net Salary</th>
+                      <th>Payment Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="salaryHistoryBody">
+                    <!-- Will be populated by AJAX -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Salary Details Modal -->
+          <div
+            class="modal fade"
+            id="salarySlipModal"
+            tabindex="-1"
+            aria-labelledby="salarySlipModalLabel"
+            aria-hidden="true"
+          >
+            <div
+              class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+            >
+              <div class="modal-content border-0 shadow-lg">
+                <!-- Modal Header -->
+                <div class="modal-header bg-primary text-white">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-file-earmark-text fs-3 me-2"></i>
+                    <h5 class="modal-title mb-0" id="salarySlipModalLabel">
+                      Salary Slip
+                    </h5>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body p-4">
+                  <!-- Company Header -->
+                  <div class="text-center mb-4">
+                    <img
+                      src="../assets/images/logo.png"
+                      alt="Company Logo"
+                      class="mb-1"
+                      style="width: 150px"
+                    />
+                    <p class="text-muted mb-0">
+                      Salary Slip for <span id="salaryMonthYear"></span>
+                    </p>
+                    <p class="text-muted small">
+                      Generated on: <span id="generationDate"></span>
+                    </p>
+                  </div>
+
+                  <!-- Employee Details Card -->
+                  <div class="card border-primary mb-4">
+                    <div
+                      class="card-header bg-primary bg-opacity-10 border-primary"
+                    >
+                      <h6 class="mb-0">
+                        <i class="bi bi-person-badge me-2"></i>Employee Details
+                      </h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                              <i class="bi bi-person fs-5"></i>
+                            </div>
+                            <div>
+                              <small class="text-muted">Name</small>
+                              <div class="fw-bold" id="empName">-</div>
+                            </div>
+                          </div>
+                          <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                              <i class="bi bi-briefcase fs-5"></i>
+                            </div>
+                            <div>
+                              <small class="text-muted">Designation</small>
+                              <div class="fw-bold" id="empDesignation">-</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                              <i class="bi bi-building fs-5"></i>
+                            </div>
+                            <div>
+                              <small class="text-muted">Department</small>
+                              <div class="fw-bold" id="empDepartment">-</div>
+                            </div>
+                          </div>
+                          <div class="d-flex">
+                            <div class="me-3 text-primary">
+                              <i class="bi bi-calendar-date fs-5"></i>
+                            </div>
+                            <div>
+                              <small class="text-muted">Date of Joining</small>
+                              <div class="fw-bold" id="empDOJ">-</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Earnings & Deductions -->
+                  <div class="row g-4 mb-4">
+                    <!-- Earnings Column -->
+                    <div class="col-md-6">
+                      <div class="card h-100 border-success">
+                        <div
+                          class="card-header bg-success bg-opacity-10 text-success border-success"
+                        >
+                          <h6 class="mb-0">
+                            <i class="bi bi-plus-circle me-2"></i>Earnings
+                          </h6>
+                        </div>
+                        <div class="card-body p-0">
+                          <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                              <thead class="table-success">
+                                <tr>
+                                  <th>Description</th>
+                                  <th class="text-end">Amount (₹)</th>
+                                </tr>
+                              </thead>
+                              <tbody id="earningsTable">
+                                <!-- Will be populated by JavaScript -->
+                              </tbody>
+                              <tfoot class="table-success">
+                                <tr>
+                                  <th class="text-end">Total Earnings:</th>
+                                  <th class="text-end" id="totalEarnings">
+                                    ₹0.00
+                                  </th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Deductions Column -->
+                    <div class="col-md-6">
+                      <div class="card h-100 border-danger">
+                        <div
+                          class="card-header bg-danger bg-opacity-10 text-danger border-danger"
+                        >
+                          <h6 class="mb-0">
+                            <i class="bi bi-dash-circle me-2"></i>Deductions
+                          </h6>
+                        </div>
+                        <div class="card-body p-0">
+                          <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                              <thead class="table-danger">
+                                <tr>
+                                  <th>Description</th>
+                                  <th class="text-end">Amount (₹)</th>
+                                </tr>
+                              </thead>
+                              <tbody id="deductionsTable"></tbody>
+                              <tfoot class="table-danger">
+                                <tr>
+                                  <th class="text-end">Total Deductions:</th>
+                                  <th class="text-end" id="totalDeductions">
+                                    ₹0.00
+                                  </th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Leave Details -->
+                  <div class="card border-info mb-4">
+                    <div
+                      class="card-header bg-info bg-opacity-10 text-info border-info"
+                    >
+                      <h6 class="mb-0">
+                        <i class="bi bi-calendar3 me-2"></i>Leave Details
+                      </h6>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                          <thead class="table-info">
+                            <tr>
+                              <th>Leave Period</th>
+                              <th>Days</th>
+                              <th>Status</th>
+                              <th class="text-end">Deduction (₹)</th>
+                            </tr>
+                          </thead>
+                          <tbody id="leavesTable"></tbody>
+                          <tfoot class="table-info">
+                            <tr>
+                              <th colspan="3" class="text-end">
+                                Total Leave Deductions:
+                              </th>
+                              <th class="text-end" id="totalLeaveDeductions">
+                                ₹0.00
+                              </th>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card border-primary">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-md-6">
+                          <div class="d-flex align-items-center">
+                            <div
+                              class="bg-primary bg-opacity-10 p-3 rounded me-3"
+                            >
+                              <i class="bi bi-cash-stack text-primary fs-3"></i>
+                            </div>
+                            <div>
+                              <small class="text-muted">Net Salary</small>
+                              <h3 class="mb-0 text-primary" id="netSalary">
+                                ₹0.00
+                              </h3>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                                                <button class="btn btn-outline-primary me-2">
+                                                    <i class="bi bi-download me-1"></i> Download PDF
+                                                </button>
+                                                <button class="btn btn-primary">
+                                                    <i class="bi bi-printer me-1"></i> Print
+                                                </button>
+                                            </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="leaves" class="section p-4 bg-light rounded-3 shadow-sm">
+        <div class="container-fluid">
+          <!-- Apply for Leave Card -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h2 class="h5 mb-0">
+                <i class="bi bi-calendar-plus me-2"></i>Apply for Leave
+              </h2>
+            </div>
+            <div class="card-body">
+              <form id="leaveForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="start_date" class="form-label fw-bold"
+                      >Start Date</label
+                    >
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-calendar"></i
+                      ></span>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="start_date"
+                        name="start_date"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="end_date" class="form-label fw-bold"
+                      >End Date</label
+                    >
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-calendar"></i
+                      ></span>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="end_date"
+                        name="end_date"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="reason" class="form-label fw-bold"
+                      >Reason</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="reason"
+                      name="reason"
+                      rows="3"
+                      placeholder="Briefly explain your reason for leave..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary px-4">
+                      <i class="bi bi-send me-2"></i>Submit Application
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-bottom">
+              <h2 class="h5 mb-0">
+                <i class="bi bi-clock-history me-2"></i>Leave History
+              </h2>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive overflow-auto">
+                <table class="table table-hover mb-0" id="leaveHistoryTable">
+                  <thead class="table-light">
+                    <tr>
+                      <th><i class="bi bi-calendar me-1"></i> Start Date</th>
+                      <th><i class="bi bi-calendar me-1"></i> End Date</th>
+                      <th><i class="bi bi-calendar-week me-1"></i> Days</th>
+                      <th><i class="bi bi-info-circle me-1"></i> Status</th>
+                      <th>
+                        <i class="bi bi-calendar-check me-1"></i> Applied On
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/scripts/User.js"></script>
+  </body>
+</html>

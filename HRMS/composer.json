@@ -1,0 +1,20 @@
+{
+    "name": "yash/hrms-portal",
+    "description": "An HRMS portal for managing employees and salaries.",
+    "type": "project",
+    "require": {
+        "firebase/php-jwt": "^6.11",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yash\\HrmsPortal\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yashwanth-chary",
+            "email": "yeshu98981@gmail.com"
+        }
+    ]
+}

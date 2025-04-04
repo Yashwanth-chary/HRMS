@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../assets/styles/Admin.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+      <div class="container-fluid">
+        <img
+          src="../assets/images/logo.png"
+          alt="Company Logo"
+          class="mb-1"
+          style="width: 150px"
+        />
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <div class="me-auto"></div>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" data-section="dashboard">
+                <i class="bi bi-house-door me-1"></i>Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-section="employee-management">
+                <i class="bi bi-people me-1"></i>Employees
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-section="earnings-deductions">
+                <i class="bi bi-cash-coin me-1"></i>Earnings & Deductions
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-section="payslip-management">
+                <i class="bi bi-file-earmark-text me-1"></i>Payslips
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-section="leaves-management">
+                <i class="bi bi-calendar3 me-1"></i>Leaves
+              </a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                id="logout"
+                class="nav-link text-danger"
+                role="button"
+                style="cursor: pointer"
+              >
+                <i class="bi bi-box-arrow-right me-1"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container px-5">
+      <div id="dashboard" class="section active mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="mb-0"><i class="bi bi-cash-stack me-2"></i>Overview</h2>
+        </div>
+        <div id="dashboardContent"></div>
+      </div>
+
+      <div id="employee-management" class="section mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="mb-0">
+            <i class="bi bi-people-fill me-2"></i>Employee Management
+          </h2>
+          <button class="btn btn-primary" id="addEmployeeBtn">
+            <i class="bi bi-plus-circle me-2"></i>Add Employee
+          </button>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover" id="employeeTable"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- add employee modal -->
+      <div
+        class="modal fade"
+        id="employeeModal"
+        tabindex="-1"
+        aria-labelledby="employeeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title" id="employeeModalLabel">
+                <i class="bi bi-person-plus me-2"></i>Add Employee
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="employeeForm">
+                <input type="hidden" name="id" id="employeeId" />
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="name"
+                        ><i class="bi bi-person me-1"></i> Full Name</label
+                      >
+                      <div class="invalid-feedback" id="nameError"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="date"
+                        class="form-control"
+                        name="dob"
+                        id="dob"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="dob"
+                        ><i class="bi bi-calendar-event me-1"></i> Date of
+                        Birth</label
+                      >
+                      <div class="invalid-feedback" id="dobError"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="date"
+                        class="form-control"
+                        name="doj"
+                        id="doj"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="doj"
+                        ><i class="bi bi-calendar-check me-1"></i> Date of
+                        Joining</label
+                      >
+                      <div class="invalid-feedback" id="dojError"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="tel"
+                        class="form-control"
+                        name="phone"
+                        id="phone"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="phone"
+                        ><i class="bi bi-phone me-1"></i> Phone Number</label
+                      >
+                      <div class="invalid-feedback" id="phoneError"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="designation"
+                        id="designation"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="designation"
+                        ><i class="bi bi-briefcase me-1"></i> Designation</label
+                      >
+                      <div class="invalid-feedback" id="designationError"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="department"
+                        id="department"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="department"
+                        ><i class="bi bi-building me-1"></i> Department</label
+                      >
+                      <div class="invalid-feedback" id="departmentError"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    <i class="bi bi-x-circle me-1"></i> Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="saveEmployeeBtn"
+                  >
+                    <i class="bi bi-save me-1"></i> Save Employee
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Employee Modal -->
+      <div
+        class="modal fade"
+        id="editEmployeeModal"
+        tabindex="-1"
+        aria-labelledby="editEmployeeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title" id="editEmployeeModalLabel">
+                <i class="bi bi-pencil-square me-2"></i>Edit Employee
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="updateEmployeeForm">
+                <input type="hidden" name="id" id="editEmployeeId" />
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="editName"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="editName"
+                        ><i class="bi bi-person me-1"></i> Full Name</label
+                      >
+                      <div class="invalid-feedback" id="editNameError">
+                        Please enter a valid name (3-50 characters)
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="date"
+                        class="form-control"
+                        name="dob"
+                        id="editDOB"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="editDOB"
+                        ><i class="bi bi-calendar-event me-1"></i> Date of
+                        Birth</label
+                      >
+                      <div class="invalid-feedback" id="editDOBError">
+                        Employee must be at least 18 years old
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="date"
+                        class="form-control"
+                        name="doj"
+                        id="editDOJ"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="editDOJ"
+                        ><i class="bi bi-calendar-check me-1"></i> Date of
+                        Joining</label
+                      >
+                      <div class="invalid-feedback" id="editDOJError">
+                        Joining date must be after birth date
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="tel"
+                        class="form-control"
+                        name="phone"
+                        id="editPhone"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="editPhone"
+                        ><i class="bi bi-telephone me-1"></i> Phone
+                        Number</label
+                      >
+                      <div class="invalid-feedback" id="editPhoneError">
+                        Please enter a 10-digit phone number
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="designation"
+                        id="editDesignation"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="editDesignation"
+                        ><i class="bi bi-briefcase me-1"></i> Designation</label
+                      >
+                      <div class="invalid-feedback" id="editDesignationError">
+                        Please enter a valid designation
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="department"
+                        id="editDepartment"
+                        placeholder=" "
+                        required
+                      />
+                      <label for="editDepartment"
+                        ><i class="bi bi-building me-1"></i> Department</label
+                      >
+                      <div class="invalid-feedback" id="editDepartmentError">
+                        Please enter a valid department
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    <i class="bi bi-x-circle me-1"></i> Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="updateEmployeeBtn"
+                  >
+                    <i class="bi bi-check-circle me-1"></i> Update Employee
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="earnings-deductions" class="section mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="mb-0">
+            <i class="bi bi-cash-stack me-2"></i>Salary Management
+          </h2>
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="bi bi-search"></i>
+                  </span>
+                  <input
+                    type="text"
+                    id="filterById"
+                    class="form-control"
+                    placeholder="Employee ID"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="bi bi-person"></i>
+                  </span>
+                  <input
+                    type="text"
+                    id="filterByName"
+                    class="form-control"
+                    placeholder="Employee Name"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="fa fa-building"></i>
+                  </span>
+                  <input
+                    type="text"
+                    id="filterByDepartment"
+                    class="form-control"
+                    placeholder="Department"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th><i class="bi bi-person-badge me-1"></i> Employee ID</th>
+                    <th><i class="bi bi-person me-1"></i> Name</th>
+                    <th><i class="fa fa-building me-1"></i> Department</th>
+                    <th><i class="bi bi-gear me-1"></i> Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="employeeSalaryTable" class=""></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- earningsDeductions Modal -->
+      <div
+        class="modal fade"
+        id="earningsDeductionsModal"
+        tabindex="-1"
+        aria-labelledby="earningsDeductionsModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+        >
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title" id="earningsDeductionsModalLabel">
+                <i class="bi bi-cash-coin me-2"></i>Manage Earnings & Deductions
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div id="employeeDetails" class="mb-4 card border-primary">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0">
+                    <i class="bi bi-person-badge me-2"></i>Employee Details
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-person-vcard"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Employee ID</small>
+                          <div class="fw-bold" id="employeeID">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center mb-3">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-person"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Name</small>
+                          <div class="fw-bold" id="employeeName">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center mb-3">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-briefcase"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Designation</small>
+                          <div class="fw-bold" id="employeeDesignation">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-building"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Department</small>
+                          <div class="fw-bold" id="employeeDepartment">-</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-calendar-event"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Date of Birth</small>
+                          <div class="fw-bold" id="employeeDOB">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center mb-3">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Date of Joining</small>
+                          <div class="fw-bold" id="employeeDOJ">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center mb-3">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-telephone"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Phone</small>
+                          <div class="fw-bold" id="employeePhone">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div
+                          class="badge bg-primary bg-opacity-10 text-primary p-2 me-3"
+                        >
+                          <i class="bi bi-cash-stack"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Salary Status</small>
+                          <div class="fw-bold" id="salaryStatus">-</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="selectMonth" class="form-label fw-bold"
+                  ><i class="bi bi-calendar-month me-2"></i>Select Month</label
+                >
+                <input
+                  type="month"
+                  class="form-control form-control-lg"
+                  id="selectMonth"
+                />
+              </div>
+
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="card border-success">
+                    <div
+                      class="card-header bg-success bg-opacity-10 text-success"
+                    >
+                      <h5 class="mb-0">
+                        <i class="bi bi-plus-circle me-2"></i>Earnings
+                      </h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table
+                          class="table table-hover align-middle"
+                          id="earningsTable"
+                        >
+                          <thead class="table-success">
+                            <tr>
+                              <th>Description</th>
+                              <th class="text-end">Amount</th>
+                              <th width="100">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody></tbody>
+                        </table>
+                      </div>
+                      <button
+                        class="btn btn-success btn-sm mt-2"
+                        id="addEarning"
+                      >
+                        <i class="bi bi-plus-lg me-1"></i>Add Earning
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-danger">
+                    <div
+                      class="card-header bg-danger bg-opacity-10 text-danger"
+                    >
+                      <h5 class="mb-0">
+                        <i class="bi bi-dash-circle me-2"></i>Deductions
+                      </h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table
+                          class="table table-hover align-middle"
+                          id="deductionsTable"
+                        >
+                          <thead class="table-danger">
+                            <tr>
+                              <th>Description</th>
+                              <th class="text-end">Amount</th>
+                              <th width="100">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody></tbody>
+                        </table>
+                      </div>
+                      <button
+                        class="btn btn-danger btn-sm mt-2"
+                        id="addDeduction"
+                      >
+                        <i class="bi bi-plus-lg me-1"></i>Add Deduction
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-4 mt-2">
+                <div class="col-md-3">
+                  <div class="card border-success h-100">
+                    <div class="card-body text-center">
+                      <small class="text-muted">Total Earnings</small>
+                      <h4 class="text-success" id="totalEarnings">₹0.00</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-danger h-100">
+                    <div class="card-body text-center">
+                      <small class="text-muted">Total Deductions</small>
+                      <h4 class="text-danger" id="totalDeductions">₹0.00</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-warning h-100">
+                    <div class="card-body text-center">
+                      <small class="text-muted">Leave Deductions</small>
+                      <h4 class="text-warning" id="totalLeaveDeductions">
+                        ₹0.00
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-primary h-100">
+                    <div class="card-body text-center">
+                      <small class="text-muted">Net Salary</small>
+                      <h4 class="text-primary" id="netSalary">₹0.00</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0">
+                    <i class="bi bi-plus-slash-minus me-2"></i>Manage Components
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                      <select id="componentType" class="form-select">
+                        <option value="0">Earning</option>
+                        <option value="1">Deduction</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        id="componentDescription"
+                        class="form-control"
+                        placeholder="Enter component description"
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-info w-100" id="addComponent">
+                        <i class="bi bi-plus-circle me-1"></i>Add Component
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                <i class="bi bi-x-lg me-1"></i>Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="saveEarningsDeductions"
+              >
+                <i class="bi bi-save me-1"></i>Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="payslip-management" class="section mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="mb-0">
+            <i class="bi bi-cash-stack me-2"></i>Manage Payslips
+          </h2>
+        </div>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="row g-3 mb-4">
+              <div class="col-md-3">
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="bi bi-search"></i>
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="payslipSearch"
+                    placeholder="Search ID..."
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <select class="form-select" id="payslipMonthFilter">
+                  <option value="">All Months</option>
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <select class="form-select" id="payslipYearFilter">
+                  <option value="">All Years</option>
+                  <option value="2023">2024</option>
+                  <option value="2024">2025</option>
+                  <option value="2024">2026</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <select class="form-select" id="payslipStatusFilter">
+                  <option value="">All Statuses</option>
+                  <option value="paid">Paid</option>
+                  <option value="pending">Not Paid</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle" id="salaryTable">
+                <thead class="table-light"></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- salary-slip-modal -->
+      <div
+        class="modal fade"
+        id="salarySlipModal"
+        tabindex="-1"
+        aria-labelledby="salarySlipModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+        >
+          <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-primary text-white">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-file-earmark-text fs-3 me-2"></i>
+                <h5 class="modal-title mb-0" id="salarySlipModalLabel">
+                  Salary Slip
+                </h5>
+              </div>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body p-4">
+              <div class="text-center mb-4">
+                <img
+                  src="../assets/images/logo.png"
+                  alt="Company Logo"
+                  class="mb-1"
+                  style="width: 150px"
+                />
+                <p class="text-muted mb-0">
+                  Salary Slip for <span id="salaryMonthYear"></span>
+                </p>
+              </div>
+
+              <div class="card border-primary mb-4">
+                <div
+                  class="card-header bg-primary bg-opacity-10 border-primary"
+                >
+                  <h6 class="mb-0">
+                    <i class="bi bi-person-badge me-2"></i>Employee Details
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="d-flex mb-3">
+                        <div class="me-3 text-primary">
+                          <i class="bi bi-person fs-5"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Name</small>
+                          <div class="fw-bold" id="empName">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex mb-3">
+                        <div class="me-3 text-primary">
+                          <i class="bi bi-briefcase fs-5"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Designation</small>
+                          <div class="fw-bold" id="empDesignation">-</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex mb-3">
+                        <div class="me-3 text-primary">
+                          <i class="fa fa-building fs-5"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Department</small>
+                          <div class="fw-bold" id="empDepartment">-</div>
+                        </div>
+                      </div>
+                      <div class="d-flex">
+                        <div class="me-3 text-primary">
+                          <i class="bi bi-calendar-date fs-5"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Date of Joining</small>
+                          <div class="fw-bold" id="empDOJ">-</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                  <div class="card h-100 border-success">
+                    <div
+                      class="card-header bg-success bg-opacity-10 text-success border-success"
+                    >
+                      <h6 class="mb-0">
+                        <i class="bi bi-plus-circle me-2"></i>Earnings
+                      </h6>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                          <thead class="table-success">
+                            <tr>
+                              <th>Description</th>
+                              <th class="text-end">Amount (₹)</th>
+                            </tr>
+                          </thead>
+                          <tbody id="previewET"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="card h-100 border-danger">
+                    <div
+                      class="card-header bg-danger bg-opacity-10 text-danger border-danger"
+                    >
+                      <h6 class="mb-0">
+                        <i class="bi bi-dash-circle me-2"></i>Deductions
+                      </h6>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                          <thead class="table-danger">
+                            <tr>
+                              <th>Description</th>
+                              <th class="text-end">Amount (₹)</th>
+                            </tr>
+                          </thead>
+                          <tbody id="previewDT"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-primary mb-4">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
+                          <i class="bi bi-cash-stack text-primary fs-3"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted">Net Salary</small>
+                          <h3 class="mb-0 text-primary" id="previewNS">
+                            ₹0.00
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="leaves-management" class="section mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="mb-0">
+            <i class="bi bi-cash-stack me-2"></i>Manage Leaves
+          </h2>
+        </div>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <!-- Filter Section -->
+            <div class="card mb-4 border-0 shadow-sm">
+              <div class="card-body">
+                <form id="filterLeavesForm">
+                  <div class="row g-3">
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <span class="input-group-text bg-light">
+                          <i class="bi bi-person-vcard"></i>
+                        </span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="employee_id"
+                          placeholder="Employee ID"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <span class="input-group-text bg-light">
+                          <i class="bi bi-list-check"></i>
+                        </span>
+                        <select class="form-select" name="status">
+                          <option value="">All Statuses</option>
+                          <option value="Pending">Pending</option>
+                          <option value="Approved">Approved</option>
+                          <option value="Rejected">Rejected</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Leave Requests Table -->
+            <div class="card border-0 shadow-sm">
+              <div class="card-body p-0">
+                <div class="table-responsive overflow-auto">
+                  <table class="table table-hover mb-0">
+                    <thead class="table-light"></thead>
+                    <tbody id="leaveRequestsTable"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/scripts/Admin.js"></script>
+  </body>
+</html>
